@@ -25,11 +25,22 @@ public class Exercises {
         // double calcResult = calculaSerie(n);
         // System.out.println("O resultado do cálculo é: " + calcResult);
 
-        System.out.print("Digite uma string para inverter: ");
-        String inputString = sc.nextLine();
-        String invertedString = inverteString(inputString);
-        System.out.println("A string invertida é: " + invertedString);
+        // System.out.print("Digite uma string para inverter: ");
+        // String inputString = sc.nextLine();
+        // String invertedString = inverteString(inputString);
+        // System.out.println("A string invertida é: " + invertedString);
     
+        // System.out.print("Digite o valor de N para a sequência: ");
+        // int n = sc.nextInt();
+        // int sequenceResult = geraSequencia(n);
+        // System.out.println("O resultado da sequência é: " + sequenceResult);
+
+        System.out.print("Digite o valor de m para Ackerman: ");
+        int m = sc.nextInt();
+        System.out.print("Digite o valor de n para Ackerman: ");
+        int n = sc.nextInt();
+        int ackermanResult = geraAckerman(m, n);
+        System.out.println("O resultado da função de Ackerman é: " + ackermanResult);
 
     }
 
@@ -99,5 +110,55 @@ public class Exercises {
     
         return string.charAt(string.length()-1) + inverteString(string.substring(0, string.length()-1));
     }
+
+    // Gerador da sequência dada por:
+    // * F(1) = 1
+    // * F(2) = 2
+    // * F(n) = 2 ∗ F(n − 1) + 3 ∗ F(n − 2).
+
+    public static int geraSequencia(int n) {
+        // Validação
+        if (n <= 0) {
+            throw new IllegalArgumentException("N deve ser positivo");
+        }
+        
+        // Casos base
+        if (n == 1) {
+            return 1;
+        }
+        if (n == 2) {
+            return 2;
+        }
+        
+        // Passo recursivo
+        return 2 * geraSequencia(n - 1) + 3 * geraSequencia(n - 2);
+    }
+
+    // Gerador de Sequência de Ackerman:
+    // * A(m, n) = n + 1, se m = 0
+    // * A(m, n) = A(m − 1, 1), se m != 0 e n = 0
+    // * A(m, n) = A(m − 1, A(m, n − 1)), se m != 0 e n != 0.
+
+    public static int geraAckerman(int m, int n) {
+        // Validação
+        if (m < 0 || n < 0) {
+            throw new IllegalArgumentException("m e n devem ser não negativos");
+        }
+        
+        // Caso base: A(0, n) = n + 1
+        if (m == 0) {
+            return n + 1;
+        }
+        
+        // Caso recursivo: A(m, 0) = A(m - 1, 1)
+        if (n == 0) {
+            return geraAckerman(m - 1, 1);
+        }
+        
+        // Caso recursivo: A(m, n) = A(m - 1, A(m, n - 1))
+        return geraAckerman(m - 1, geraAckerman(m, n - 1)); 
+    }
+
+    
 
 }
